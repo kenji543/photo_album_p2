@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}Photo Album{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'css/site.css' %}" />
+</head>
+<body>
+  <header class="masthead">
+    <div class="toolbar">
+      <a class="brand" href="{% url 'album_list' %}">Photo Album</a>
+      <nav>
+        <a class="button button-link" href="{% url 'contact' %}">Contact</a>
+        {% if user.is_authenticated %}
+          <span class="user-label">Hi, {{ user.username }}</span>
+          <a class="button button-secondary" href="{% url 'album_create' %}">+ New Album</a>
+          <form method="post" action="{% url 'logout' %}" class="logout-form">
+            {% csrf_token %}
+            <button type="submit" class="button button-link">Logout</button>
+          </form>
+        {% else %}
+          <a class="button button-secondary" href="{% url 'login' %}">Login</a>
+          <a class="button button-link" href="{% url 'signup' %}">Sign Up</a>
+        {% endif %}
+      </nav>
+    </div>
+  </header>
+
+  <main class="page-content">
+    <div class="container">
+      {% if messages %}
+        <div class="messages">
+          {% for message in messages %}
+            <div class="message {{ message.tags }}">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+      {% block content %}{% endblock %}
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">.</div>
+  </footer>
+</body>
+</html>

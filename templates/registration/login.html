@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %}Login – Photo Album{% endblock %}
+{% block content %}
+  <section class="page-head">
+    <h1>Login</h1>
+    <p>Enter your credentials to manage albums and upload photos.</p>
+  </section>
+
+  <form method="post" class="form-panel">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <div class="form-actions">
+      <button type="submit" class="button button-primary">Login</button>
+      <a class="button button-link" href="{% url 'signup' %}">Create an account</a>
+    </div>
+  </form>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %}Delete Photo – Photo Album{% endblock %}
+{% block content %}
+  <section class="page-head">
+    <h1>Delete Photo</h1>
+    <p>Are you sure you want to remove "{{ object.title }}" from the album?</p>
+  </section>
+
+  <form method="post" class="form-panel">
+    {% csrf_token %}
+    <p class="warning">This cannot be undone.</p>
+    <div class="form-actions">
+      <button type="submit" class="button button-danger">Delete photo</button>
+      <a class="button button-link" href="{{ object.album.get_absolute_url }}">Cancel</a>
+    </div>
+  </form>
+{% endblock %}

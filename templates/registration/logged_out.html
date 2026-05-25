@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block title %}Logged Out – Photo Album{% endblock %}
+{% block content %}
+  <section class="page-head">
+    <h1>Logged Out</h1>
+    <p>You have been safely logged out. Come back soon.</p>
+    <a class="button button-primary" href="{% url 'login' %}">Login again</a>
+  </section>
+{% endblock %}

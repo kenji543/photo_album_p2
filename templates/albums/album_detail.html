@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block title %}{{ album.title }} – Photo Album{% endblock %}
+{% block content %}
+  <section class="page-head detail-head">
+    <a class="link-back" href="{% url 'album_list' %}">&larr; Back to albums</a>
+    <div>
+      <h1>{{ album.title }}</h1>
+      <p>{{ album.description }}</p>
+      <div class="detail-meta">By {{ album.owner.username }} · {{ album.photo_count }} photos</div>
+    </div>
+    <div class="action-row">
+      {% if user.is_authenticated and (user.is_staff or album.owner == user) %}
+        <a class="button button-secondary" href="{% url 'album_edit' album.pk %}">Edit Album</a>
+        <a class="button button-danger" href="{% url 'album_delete' album.pk %}">Delete</a>
+      {% endif %}
+      {% if user.is_authenticated and (user.is_staff or album.owner == user) %}
+        <a class="button button-primary" href="{% url 'photo_upload' album.pk %}">Upload Photo</a>
+      {% endif %}
+    </div>
+  </section>
+
+  <div class="photo-grid">
+    {% for photo in album.photos.all %}
+      <article class="photo-card">
+        <img src="{{ photo.image.url }}" alt="{{ photo.title }}" class="photo-preview" />
+        <div class="photo-details">
+          <h2>{{ photo.title }}</h2>
+          <p>{{ photo.description|truncatewords:15 }}</p>
+          <div class="photo-meta">Uploaded by {{ photo.uploaded_by.username }}</div>
+          {% if user.is_authenticated and (user.is_staff or photo.uploaded_by == user or album.owner == user) %}
+            <a class="button button-danger button-small" href="{% url 'photo_delete' photo.pk %}">Delete</a>
+          {% endif %}
+        </div>
+      </article>
+    {% empty %}
+      <p class="empty-state">No photos have been added yet.</p>
+    {% endfor %}
+  </div>
+{% endblock %}

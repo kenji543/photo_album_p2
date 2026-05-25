@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %}{{ view.object|default:'New' }} Album – Photo Album{% endblock %}
+{% block content %}
+  <section class="page-head">
+    <h1>{% if view.object %}Edit Album{% else %}Create Album{% endif %}</h1>
+    <p>Share your album with a cover image and short description.</p>
+  </section>
+
+  <form method="post" enctype="multipart/form-data" class="form-panel">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <div class="form-actions">
+      <button type="submit" class="button button-primary">Save</button>
+      <a class="button button-link" href="{% url 'album_list' %}">Cancel</a>
+    </div>
+  </form>
+{% endblock %}

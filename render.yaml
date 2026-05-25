@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: photo-album
+    env: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn photo_album_project.wsgi

@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block title %}Thank You – Photo Album{% endblock %}
+{% block content %}
+  <section class="page-head">
+    <h1>Message received</h1>
+    <p>Thank you for reaching out. Your message has been received and we will reply soon.</p>
+    <a class="button button-primary" href="{% url 'album_list' %}">Back to albums</a>
+  </section>
+{% endblock %}

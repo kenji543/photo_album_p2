@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %}Upload Photo – Photo Album{% endblock %}
+{% block content %}
+  <section class="page-head">
+    <h1>Upload Photo</h1>
+    <p>Add a new photo to "{{ album.title }}".</p>
+  </section>
+
+  <form method="post" enctype="multipart/form-data" class="form-panel">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <div class="form-actions">
+      <button type="submit" class="button button-primary">Upload</button>
+      <a class="button button-link" href="{{ album.get_absolute_url }}">Cancel</a>
+    </div>
+  </form>
+{% endblock %}
