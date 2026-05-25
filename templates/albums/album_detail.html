@@ -21,21 +21,21 @@
 
   <div class="photo-grid">
     {% for photo in album.photos.all %}
-      <article class="photo-card">
-        {% if photo.image %}
-          <img src="{{ photo.image.url }}" alt="{{ photo.title }}" class="photo-preview" />
-        {% else %}
-          <div class="card-placeholder">No image</div>
+      {% with image_url=photo.get_image_url %}
+        {% if image_url %}
+          <article class="photo-card">
+            <img src="{{ image_url }}" alt="{{ photo.title }}" class="photo-preview" />
+            <div class="photo-details">
+              <h2>{{ photo.title }}</h2>
+              <p>{{ photo.description|truncatewords:15 }}</p>
+              <div class="photo-meta">Uploaded by {{ photo.uploaded_by.username }}</div>
+              {% if user.is_authenticated and (user.is_staff or photo.uploaded_by == user or album.owner == user) %}
+                <a class="button button-danger button-small" href="{% url 'photo_delete' photo.pk %}">Delete</a>
+              {% endif %}
+            </div>
+          </article>
         {% endif %}
-        <div class="photo-details">
-          <h2>{{ photo.title }}</h2>
-          <p>{{ photo.description|truncatewords:15 }}</p>
-          <div class="photo-meta">Uploaded by {{ photo.uploaded_by.username }}</div>
-          {% if user.is_authenticated and (user.is_staff or photo.uploaded_by == user or album.owner == user) %}
-            <a class="button button-danger button-small" href="{% url 'photo_delete' photo.pk %}">Delete</a>
-          {% endif %}
-        </div>
-      </article>
+      {% endwith %}
     {% empty %}
       <p class="empty-state">No photos have been added yet.</p>
     {% endfor %}

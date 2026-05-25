@@ -10,11 +10,13 @@
     {% for album in albums %}
       <article class="card">
         <a href="{{ album.get_absolute_url }}">
-          {% if album.cover_image %}
-            <img src="{{ album.cover_image.url }}" alt="{{ album.title }} cover" class="card-image" />
-          {% else %}
-            <div class="card-placeholder">No cover</div>
-          {% endif %}
+          {% with cover_url=album.get_cover_url %}
+            {% if cover_url %}
+              <img src="{{ cover_url }}" alt="{{ album.title }} cover" class="card-image" />
+            {% else %}
+              <div class="card-placeholder">No cover</div>
+            {% endif %}
+          {% endwith %}
         </a>
         <div class="card-body">
           <h2><a href="{{ album.get_absolute_url }}">{{ album.title }}</a></h2>

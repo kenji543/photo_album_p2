@@ -28,6 +28,12 @@ class Album(models.Model):
 
         return reverse('album_detail', kwargs={'pk': self.pk})
 
+    def get_cover_url(self):
+        try:
+            return self.cover_image.url if self.cover_image else None
+        except Exception:
+            return None
+
 
 class Photo(models.Model):
     album = models.ForeignKey(
@@ -50,6 +56,12 @@ class Photo(models.Model):
 
     def __str__(self):
         return self.title
+
+    def get_image_url(self):
+        try:
+            return self.image.url if self.image else None
+        except Exception:
+            return None
 
 
 class ContactMessage(models.Model):
