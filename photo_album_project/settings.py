@@ -108,12 +108,10 @@ if CLOUDINARY_URL:
     import cloudinary
 
     cloudinary.config(cloudinary_url=CLOUDINARY_URL)
-
-if DEBUG and not CLOUDINARY_URL:
+    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+else:
     DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
     MEDIA_ROOT = BASE_DIR / 'media'
-else:
-    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 LOGIN_REDIRECT_URL = 'album_list'
 LOGOUT_REDIRECT_URL = 'login'
